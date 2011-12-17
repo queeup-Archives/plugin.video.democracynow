@@ -5,9 +5,10 @@ import os, sys, urllib
 import xbmc, xbmcgui, xbmcplugin, xbmcaddon
 from BeautifulSoup import SoupStrainer, BeautifulSoup as BS
 
-__settings__ = xbmcaddon.Addon(id='plugin.video.democracynow')
-__icon__ = __settings__.getAddonInfo('icon')
-__fanart__ = __settings__.getAddonInfo('fanart')
+__addon__ = xbmcaddon.Addon(id='plugin.video.democracynow')
+__info__ = __addon__.getAddonInfo
+__icon__ = __info__('icon')
+__fanart__ = __info__('fanart')
 
 # Fanart
 xbmcplugin.setPluginFanart(int(sys.argv[1]), __fanart__)
