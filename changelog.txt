@@ -1,5 +1,9 @@
 plugin.video.democracynow:
 --------------------------
+v1.0.5 (18.12.2011)
+added: Audio support from Music add-on
+fix: thumb issue
+
 v1.0.4 (17.12.2011)
 changed : Prepare for Eden
 

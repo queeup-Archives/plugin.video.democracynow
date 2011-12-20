@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <addon
   id="plugin.video.democracynow"
-  version="1.0.3"
+  version="1.0.5"
   name="Democracy Now!"
   provider-name="queeup">
   <requires>
@@ -12,7 +12,7 @@
   </requires>
   <extension point="xbmc.python.pluginsource"
              library="addon.py">
-    <provides>video</provides>
+    <provides>video audio</provides>
   </extension>
   <extension point="xbmc.addon.metadata">
     <summary>Democracy Now! video add-on</summary>
