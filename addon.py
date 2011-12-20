@@ -20,8 +20,10 @@ def Main():
   date = soup.find('div', 'context_header').h2.string.strip()
   for entry in soup('li'):
     url = entry('a', 'video_link')[0]['href']
-    #thumb = entry('a', 'video_link')[0].img['src']
-    thumb = entry('img', 'video_poster')[0]['src']
+    try:
+      thumb = entry('img', 'video_poster')[0]['src']
+    except:
+      thumb = entry('a', 'video_link')[0].img['src']
     if not thumb.startswith("http://"):
       thumb = 'http://m.democracynow.org' + thumb
     title = entry('div', 'two_thirds')[0].a.string.strip()
