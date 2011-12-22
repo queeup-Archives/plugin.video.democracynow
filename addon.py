@@ -19,7 +19,10 @@ def Main():
   soup = BS(URL, parseOnlyThese=SoupStrainer('div', 'ui-content'))
   date = soup.find('div', 'context_header').h2.string.strip()
   for entry in soup('li'):
-    url = entry('a', 'video_link')[0]['href']
+    try:
+      url = entry('a', 'video_link')[0]['href']
+    except:
+      continue
     try:
       thumb = entry('img', 'video_poster')[0]['src']
     except:
