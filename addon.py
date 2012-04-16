@@ -1,9 +1,12 @@
 # -*- coding: utf-8 -*-
 
 # Imports
-import os, sys, urllib
-import xbmc, xbmcgui, xbmcplugin, xbmcaddon
 from BeautifulSoup import SoupStrainer, BeautifulSoup as BS
+import sys
+import urllib
+import xbmcgui
+import xbmcplugin
+import xbmcaddon
 
 __addon__ = xbmcaddon.Addon(id='plugin.video.democracynow')
 __info__ = __addon__.getAddonInfo
@@ -15,7 +18,7 @@ xbmcplugin.setPluginFanart(int(sys.argv[1]), __fanart__)
 
 URL = urllib.urlopen('http://m.democracynow.org/').read().replace('&quot;', '"').replace('&#8217;', "'").replace('<span class="caps">', '').replace('</span>', '')
 
-# Main
+
 def Main():
   soup = BS(URL, parseOnlyThese=SoupStrainer('div', 'ui-content'))
   date = soup.find('div', 'context_header').h2.string.strip()
@@ -56,12 +59,12 @@ def Main():
     listitem = xbmcgui.ListItem(title, iconImage="DefaultVideoBig.png", thumbnailImage=thumb)
     listitem.setProperty('IsPlayable', 'true')
     listitem.setInfo(type=content,
-                     infoLabels={"title" : title,
-                                 "label" : title,
-                                 "plot" : summary,
-                                 "duration" : duration,
-                                 "tvshowtitle" : date})
-    xbmcplugin.addDirectoryItem(int(sys.argv[ 1 ]), url, listitem, isFolder=False)
+                     infoLabels={"title": title,
+                                 "label": title,
+                                 "plot": summary,
+                                 "duration": duration,
+                                 "tvshowtitle": date})
+    xbmcplugin.addDirectoryItem(int(sys.argv[1]), url, listitem, isFolder=False)
 
   xbmcplugin.setContent(int(sys.argv[1]), 'episodes')
 
