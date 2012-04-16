@@ -57,6 +57,7 @@ def Main():
     except:
       duration = ''
     listitem = xbmcgui.ListItem(title, iconImage="DefaultVideoBig.png", thumbnailImage=thumb)
+    listitem.setProperty('fanart_image', __fanart__)
     listitem.setProperty('IsPlayable', 'true')
     listitem.setInfo(type=content,
                      infoLabels={"title": title,
