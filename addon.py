@@ -39,16 +39,16 @@ def Main():
     if not thumb.startswith("http://"):
       thumb = 'http://m.democracynow.org' + thumb
     title = entry('div', 'two_thirds')[0].a.string.strip()
-    if title == 'Watch':
+    if title.startswith('Watch'):
       title = 'Full Show'
-    elif title == 'A collection of news briefs from around the world.':
+    elif title.startswith('A collection of news briefs from around the world.'):
       title = 'Headlines'
     try:
       summary = entry('div', 'more_summary')[0].p.string
     except:
-      if title == 'Full Show':
+      if title.startswith('Full Show'):
         summary = 'Watch Full Show'
-      elif title == 'Headlines':
+      elif title.startswith('Headlines'):
         summary = 'A collection of news briefs from around the world.'
       else:
         summary = ''
