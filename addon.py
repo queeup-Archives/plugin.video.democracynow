@@ -23,15 +23,7 @@ def Main():
   soup = BS(URL, parseOnlyThese=SoupStrainer('div', 'ui-content'))
   date = soup.find('div', 'context_header').h2.string.strip()
   for entry in soup('li'):
-    if xbmcgui.getCurrentWindowId() == 10501:
-      content = 'audio'
-      try:
-        url = entry('a', 'media_icon listen')[0]['href']
-      except:
-        url = ''
-    else:
-      url = entry('a', 'video_link')[0]['href']
-      content = 'video'
+    url = entry('a', 'video_link')[0]['href']
     try:
       thumb = entry('img', 'video_poster')[0]['src']
     except:
@@ -59,9 +51,8 @@ def Main():
     listitem = xbmcgui.ListItem(title, iconImage="DefaultVideoBig.png", thumbnailImage=thumb)
     listitem.setProperty('fanart_image', __fanart__)
     listitem.setProperty('IsPlayable', 'true')
-    listitem.setInfo(type=content,
+    listitem.setInfo(type="video",
                      infoLabels={"title": title,
-                                 "label": title,
                                  "plot": summary,
                                  "duration": duration,
                                  "tvshowtitle": date})
