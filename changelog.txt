@@ -1,5 +1,8 @@
 plugin.video.democracynow:
 --------------------------
+v2.0.1 (03.01.2013)
+-fix content list
+
 v2.0.0 (30.04.2012)
 -code cleanup and reorder with pep8
 -fanart support for content list
