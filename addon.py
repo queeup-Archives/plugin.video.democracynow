@@ -8,10 +8,9 @@ import xbmcgui
 import xbmcplugin
 import xbmcaddon
 
-__addon__ = xbmcaddon.Addon(id='plugin.video.democracynow')
-__info__ = __addon__.getAddonInfo
-__icon__ = __info__('icon')
-__fanart__ = __info__('fanart')
+__addon__ = xbmcaddon.Addon()
+__icon__ = __addon__.getAddonInfo('icon')
+__fanart__ = __addon__.getAddonInfo('fanart')
 
 # Fanart
 xbmcplugin.setPluginFanart(int(sys.argv[1]), __fanart__)
@@ -60,9 +59,7 @@ def Main():
                                  "duration": duration,
                                  "tvshowtitle": date})
     xbmcplugin.addDirectoryItem(int(sys.argv[1]), url, listitem, isFolder=False)
-
   xbmcplugin.setContent(int(sys.argv[1]), 'episodes')
-
   # End of list...
   xbmcplugin.endOfDirectory(int(sys.argv[1]), True)
 
