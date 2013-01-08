@@ -1,5 +1,9 @@
 plugin.video.democracynow:
 --------------------------
+v2.0.2 (09.01.2012)
+-frodo release
+-cosmetic
+
 v2.0.1 (03.01.2013)
 -fix content list
 
