@@ -23,7 +23,7 @@ def Main():
   date = soup.find('div', 'context_header').h2.string.strip()
   for entry in soup('li'):
     try:
-      url = entry('a', 'video_link')[0]['href']
+      url = entry('a', 'video_link')[0]['href'].replace('/ipod/', '/flash/')
     except:
       continue
     try:
