@@ -1,5 +1,9 @@
 plugin.video.democracynow:
 --------------------------
+v2.0.3 (23.01.2014)
+-better video quality. thanks to @celadoor
+-added additional information in addon.xml
+
 v2.0.2 (09.01.2012)
 -frodo release
 -cosmetic
