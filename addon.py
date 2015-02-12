@@ -22,43 +22,46 @@ def Main():
   soup = BS(URL, parseOnlyThese=SoupStrainer('div', 'ui-content'))
   date = soup.find('div', 'context_header').h2.string.strip()
   for entry in soup('li'):
-    try:
-      url = entry('a', 'video_link')[0]['href'].replace('/ipod/', '/flash/')
-    except:
-      continue
-    try:
-      thumb = entry('img', 'video_poster')[0]['src']
-    except:
-      thumb = entry('a', 'video_link')[0].img['src']
-    if not thumb.startswith("http://"):
-      thumb = 'http://m.democracynow.org' + thumb
-    title = entry('div', 'two_thirds')[0].a.string.strip()
-    if title.startswith('Watch'):
-      title = 'Full Show'
-    elif title.startswith('A collection of news briefs from around the world.'):
-      title = 'Headlines'
-    try:
-      summary = entry('div', 'more_summary')[0].p.string
-    except:
-      if title.startswith('Full Show'):
-        summary = 'Watch Full Show'
-      elif title.startswith('Headlines'):
-        summary = 'A collection of news briefs from around the world.'
-      else:
-        summary = ''
-    try:
-      duration = entry('div', 'media_icon duration')[0].string.strip().replace(' ', '').replace('m', ':').replace('s', '')
-    except:
-      duration = ''
-    listitem = xbmcgui.ListItem(title, iconImage="DefaultVideoBig.png", thumbnailImage=thumb)
-    listitem.setProperty('fanart_image', __fanart__)
-    listitem.setProperty('IsPlayable', 'true')
-    listitem.setInfo(type="video",
-                     infoLabels={"title": title,
-                                 "plot": summary,
-                                 "duration": duration,
-                                 "tvshowtitle": date})
-    xbmcplugin.addDirectoryItem(int(sys.argv[1]), url, listitem, isFolder=False)
+    if not entry('a', 'video_link')[0]['href'].startswith('http://'):
+      pass
+    else:
+      try:
+        url = entry('a', 'video_link')[0]['href'].replace('/ipod/', '/flash/')
+      except:
+        continue
+      try:
+        thumb = entry('img', 'video_poster')[0]['src']
+      except:
+        thumb = entry('a', 'video_link')[0].img['src']
+      if not thumb.startswith("http://"):
+        thumb = 'http://m.democracynow.org' + thumb
+      title = entry('div', 'two_thirds')[0].a.string.strip()
+      if title.startswith('Watch'):
+        title = 'Full Show'
+      elif title.startswith('A collection of news briefs from around the world.'):
+        title = 'Headlines'
+      try:
+        summary = entry('div', 'more_summary')[0].p.string
+      except:
+        if title.startswith('Full Show'):
+          summary = 'Watch Full Show'
+        elif title.startswith('Headlines'):
+          summary = 'A collection of news briefs from around the world.'
+        else:
+          summary = ''
+      try:
+        duration = entry('div', 'media_icon duration')[0].string.strip().replace(' ', '').replace('m', ':').replace('s', '')
+      except:
+        duration = ''
+      listitem = xbmcgui.ListItem(title, iconImage="DefaultVideoBig.png", thumbnailImage=thumb)
+      listitem.setProperty('fanart_image', __fanart__)
+      listitem.setProperty('IsPlayable', 'true')
+      listitem.setInfo(type="video",
+                       infoLabels={"title": title,
+                                   "plot": summary,
+                                   "duration": duration,
+                                   "tvshowtitle": date})
+      xbmcplugin.addDirectoryItem(int(sys.argv[1]), url, listitem, isFolder=False)
   xbmcplugin.setContent(int(sys.argv[1]), 'episodes')
   # End of list...
   xbmcplugin.endOfDirectory(int(sys.argv[1]), True)
