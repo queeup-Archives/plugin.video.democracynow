@@ -50,15 +50,18 @@ def Main():
       duration = entry('div', 'media_icon duration')[0].string.strip().replace(' ', '').replace('m', ':').replace('s', '')
     except:
       duration = ''
-    listitem = xbmcgui.ListItem(title, iconImage="DefaultVideoBig.png", thumbnailImage=thumb)
-    listitem.setProperty('fanart_image', __fanart__)
-    listitem.setProperty('IsPlayable', 'true')
-    listitem.setInfo(type="video",
-                     infoLabels={"title": title,
-                                 "plot": summary,
-                                 "duration": duration,
-                                 "tvshowtitle": date})
-    xbmcplugin.addDirectoryItem(int(sys.argv[1]), url, listitem, isFolder=False)
+    if url.startswith('http://'):
+      listitem = xbmcgui.ListItem(title, iconImage="DefaultVideoBig.png", thumbnailImage=thumb)
+      listitem.setProperty('fanart_image', __fanart__)
+      listitem.setProperty('IsPlayable', 'true')
+      listitem.setInfo(type="video",
+                       infoLabels={"title": title,
+                                   "plot": summary,
+                                   "duration": duration,
+                                   "tvshowtitle": date})
+      xbmcplugin.addDirectoryItem(int(sys.argv[1]), url, listitem, isFolder=False)
+    else:
+      pass
   xbmcplugin.setContent(int(sys.argv[1]), 'episodes')
   # End of list...
   xbmcplugin.endOfDirectory(int(sys.argv[1]), True)
