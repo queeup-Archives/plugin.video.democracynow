@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 
-# Imports
 from BeautifulSoup import SoupStrainer, BeautifulSoup as BS
 import sys
 import urllib
@@ -8,17 +7,21 @@ import xbmcgui
 import xbmcplugin
 import xbmcaddon
 
-__addon__ = xbmcaddon.Addon()
-__icon__ = __addon__.getAddonInfo('icon')
-__fanart__ = __addon__.getAddonInfo('fanart')
+addon = xbmcaddon.Addon()
+addon_icon = addon.getAddonInfo('icon')
+addon_fanart = addon.getAddonInfo('fanart')
+addon_handler = int(sys.argv[1])
 
 # Fanart
-xbmcplugin.setPluginFanart(int(sys.argv[1]), __fanart__)
+xbmcplugin.setPluginFanart(int(sys.argv[1]), addon_fanart)
 
-URL = urllib.urlopen('http://m.democracynow.org/').read().replace('&quot;', '"').replace('&#8217;', "'").replace('<span class="caps">', '').replace('</span>', '')
+URL = urllib.urlopen('http://m.democracynow.org/').read().replace('&quot;', '"')\
+                                                         .replace('&#8217;', "'")\
+                                                         .replace('<span class="caps">', '')\
+                                                         .replace('</span>', '')
 
 
-def Main():
+def main():
   soup = BS(URL, parseOnlyThese=SoupStrainer('div', 'ui-content'))
   date = soup.find('div', 'context_header').h2.string.strip()
   for entry in soup('li'):
@@ -47,23 +50,25 @@ def Main():
       else:
         summary = ''
     try:
-      duration = entry('div', 'media_icon duration')[0].string.strip().replace(' ', '').replace('m', ':').replace('s', '')
+      duration = entry('div', 'media_icon duration')[0].string.strip().replace(' ', '')\
+                                                                      .replace('m', ':')\
+                                                                      .replace('s', '')
     except IndexError:
       duration = ''
     if url.startswith('http://'):
       listitem = xbmcgui.ListItem(title, iconImage="DefaultVideoBig.png", thumbnailImage=thumb)
-      listitem.setProperty('fanart_image', __fanart__)
+      listitem.setProperty('fanart_image', addon_fanart)
       listitem.setProperty('IsPlayable', 'true')
       listitem.setInfo(type="video",
                        infoLabels={"title": title,
                                    "plot": summary,
                                    "duration": duration,
                                    "tvshowtitle": date})
-      xbmcplugin.addDirectoryItem(int(sys.argv[1]), url, listitem, isFolder=False)
+      xbmcplugin.addDirectoryItem(addon_handler, url, listitem, isFolder=False)
     else:
       pass
-  xbmcplugin.setContent(int(sys.argv[1]), 'episodes')
+  xbmcplugin.setContent(addon_handler, 'episodes')
   # End of list...
-  xbmcplugin.endOfDirectory(int(sys.argv[1]), True)
+  xbmcplugin.endOfDirectory(addon_handler, True)
 
-Main()
+main()
