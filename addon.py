@@ -33,7 +33,7 @@ def Main():
     if not thumb.startswith("http://"):
       thumb = 'http://m.democracynow.org' + thumb
     title = entry('div', 'two_thirds')[0].a.string.strip()
-    if title.startswith('Watch'):
+    if title == 'Watch':
       title = 'Full Show'
     elif title.startswith('A collection of news briefs from around the world.'):
       title = 'Headlines'
