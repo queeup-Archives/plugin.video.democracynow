@@ -24,11 +24,11 @@ def Main():
   for entry in soup('li'):
     try:
       url = entry('a', 'video_link')[0]['href'].replace('/ipod/', '/flash/')
-    except:
+    except IndexError:
       continue
     try:
       thumb = entry('img', 'video_poster')[0]['src']
-    except:
+    except IndexError:
       thumb = entry('a', 'video_link')[0].img['src']
     if not thumb.startswith("http://"):
       thumb = 'http://m.democracynow.org' + thumb
@@ -39,7 +39,7 @@ def Main():
       title = 'Headlines'
     try:
       summary = entry('div', 'more_summary')[0].p.string
-    except:
+    except IndexError:
       if title.startswith('Full Show'):
         summary = 'Watch Full Show'
       elif title.startswith('Headlines'):
@@ -48,7 +48,7 @@ def Main():
         summary = ''
     try:
       duration = entry('div', 'media_icon duration')[0].string.strip().replace(' ', '').replace('m', ':').replace('s', '')
-    except:
+    except IndexError:
       duration = ''
     if url.startswith('http://'):
       listitem = xbmcgui.ListItem(title, iconImage="DefaultVideoBig.png", thumbnailImage=thumb)
