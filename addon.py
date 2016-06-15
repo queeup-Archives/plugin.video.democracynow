@@ -55,7 +55,7 @@ def main():
                                                                       .replace('s', '')
     except IndexError:
       duration = ''
-    if url.startswith('http://'):
+    if url.startswith('https://'):
       listitem = xbmcgui.ListItem(title, iconImage="DefaultVideoBig.png", thumbnailImage=thumb)
       listitem.setProperty('fanart_image', addon_fanart)
       listitem.setProperty('IsPlayable', 'true')
