@@ -1,6 +1,9 @@
 plugin.video.democracynow:
 --------------------------
-v2.0.3 (20.02.2015)
+v2.0.5 (15.06.2016)
+-fixed video url
+
+v2.0.4 (20.02.2015)
 -get rid of unplayable content.
 
 v2.0.3 (23.01.2014)
