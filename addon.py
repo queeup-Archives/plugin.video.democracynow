@@ -21,6 +21,11 @@ URL = urllib.urlopen('http://m.democracynow.org/').read().replace('&quot;', '"')
                                                          .replace('</span>', '')
 
 
+def get_sec(time_str):
+    m, s = time_str.split(':')
+    return int(m) * 60 + int(s)
+
+
 def main():
   soup = BS(URL, parseOnlyThese=SoupStrainer('div', 'ui-content'))
   date = soup.find('div', 'context_header').h2.string.strip()
@@ -50,9 +55,9 @@ def main():
       else:
         summary = ''
     try:
-      duration = entry('div', 'media_icon duration')[0].string.strip().replace(' ', '')\
-                                                                      .replace('m', ':')\
-                                                                      .replace('s', '')
+      duration = get_sec(entry('div', 'media_icon duration')[0].string.strip().replace(' ', '')\
+                                                                              .replace('m', ':')\
+                                                                              .replace('s', ''))
     except IndexError:
       duration = ''
     if url.startswith('https://'):
