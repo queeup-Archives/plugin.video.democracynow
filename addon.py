@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 
 import sys
-import datetime
 import xbmcgui
 import xbmcplugin
 import xbmcaddon
@@ -29,9 +28,6 @@ def string_correction(_str):
 
 
 def main():
-    s = datetime.datetime.strptime(r['publicationDate'][:-6], "%Y-%m-%dT%H:%M:%S")
-    publicationdate = s.strftime('%d %B %Y')
-
     for show in r['media']:
         if 'High' in show['title']:
             url = show['src']
@@ -43,8 +39,7 @@ def main():
             listitem.setProperty('IsPlayable', 'true')
             listitem.setInfo(type="video",
                              infoLabels={"title": title,
-                                         "plot": summary,
-                                         "tvshowtitle": publicationdate})
+                                         "plot": summary})
             xbmcplugin.addDirectoryItem(addon_handler, url, listitem, isFolder=False)
 
     for video in r['items']:
@@ -82,8 +77,7 @@ def main():
             listitem.setInfo(type="video",
                              infoLabels={"title": title,
                                          "plot": summary,
-                                         "duration": duration,
-                                         "tvshowtitle": publicationdate})
+                                         "duration": duration})
             xbmcplugin.addDirectoryItem(addon_handler, url, listitem, isFolder=False)
         else:
             pass
