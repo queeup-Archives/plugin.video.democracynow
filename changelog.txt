@@ -1,6 +1,9 @@
 plugin.video.democracynow:
 --------------------------
-v2.0.5 (13.05.2017)
+v2.1.0 (06.06.2017)
+-Rewritten with new api due to website change.
+
+v2.0.6 (13.05.2017)
 -fixed video duration
 
 v2.0.5 (15.06.2016)
