@@ -11,14 +11,22 @@ from HTMLParser import HTMLParser
 addon = xbmcaddon.Addon()
 addon_icon = addon.getAddonInfo('icon')
 addon_fanart = addon.getAddonInfo('fanart')
-addon_handler = int(sys.argv[1])
+
+try:
+    addon_handler = int(sys.argv[1])
+except IndexError:
+    addon_handler = int()
 
 # Fanart
-xbmcplugin.setPluginFanart(int(sys.argv[1]), addon_fanart)
+xbmcplugin.setPluginFanart(addon_handler, addon_fanart)
 
 thumb_replacement = 'https://assets.democracynow.org/assets/default_content_image-354f4555cc64afadc730d64243c658dd0af1f330152adcda6c4900cb4a26f082.jpg'
 current_show = 'http://www.democracynow.org/api/1/current_show'
-r = requests.get(current_show).json()
+
+
+def get_json(url):
+    r = requests.get(url).json()
+    return r
 
 
 def remove_html_tags(text):
@@ -38,7 +46,7 @@ def string_correction(_str):
 
 
 def main():
-    for show in r['media']:
+    for show in get_json(current_show)['media']:
         if 'High' in show['title']:
             url = show['src']
             title = 'Full Show'
@@ -52,9 +60,9 @@ def main():
                                          "plot": summary})
             xbmcplugin.addDirectoryItem(addon_handler, url, listitem, isFolder=False)
 
-    for video in r['items']:
+    for video in get_json(current_show)['items']:
         if video['itemType'] == 'headline_section':
-            title = 'Headlines'
+            title = u'Headlines'
         else:
             title = string_correction(video['title'])
 
@@ -94,5 +102,6 @@ def main():
     xbmcplugin.setContent(addon_handler, 'episodes')
     # End of list...
     xbmcplugin.endOfDirectory(addon_handler, True)
+
 
 main()
